@@ -12,15 +12,6 @@ def printNodes(node):
 
 
 class Solution:
-    def swapPairs(self, head):
-        """
-        :type head: ListNode
-        :rtype: ListNode
-        """
-        current = head
-        while current.next.next is not None:
-            pass
-
     def swapNext(self, node0):
         """swap with the next node"""
         if node0.next is not None:
@@ -33,22 +24,24 @@ class Solution:
         else:
             return node0
 
-    def swapPairs2(self, head):
+    def swapPairs(self, head):
         """
         :type head: ListNode
         :rtype: ListNode
         """
-        n0 = head
-        n1 = n0.next
-        n2 = n1.next
-        head = n1
-        while n1.next is not None:
-            n0.next = n2
-            n1.next = n0
-            n2_ = self.swapNext(n1.next)
-            n0 = n2
-            n1 = n0.next
-        return head
+        if head is None:
+            return None
+        elif head.next is None:
+            return head
+        else:
+            head = self.swapNext(head) # swap the first pair
+            current = head # pointer to the current pair, to be updated
+            while current.next is not None and current.next.next is not None:
+                current.next.next = self.swapNext(current.next.next)
+                current = current.next.next # move forward
+            
+            return head
+        
 
 if __name__ == "__main__":
     # stupid way to create a list
@@ -58,33 +51,24 @@ if __name__ == "__main__":
     myList.next.next.next = ListNode(4)
     myList.next.next.next.next = ListNode(5)
     myList.next.next.next.next.next = ListNode(6)
+    myList.next.next.next.next.next.next = ListNode(7)
+    myList.next.next.next.next.next.next.next = ListNode(8)
     
+    sol = Solution()
+
     printNodes(myList)
+
     import copy
     myList2 = copy.deepcopy(myList)
-
-    sol = Solution()
     print("\n---")
-    current = sol.swapNext(myList)
-    printNodes(current)
-    print("---")
-    nextBatch = current.next.next
-    swapped = sol.swapNext(nextBatch)
-    current.next.next = swapped
-    printNodes(current)
-    print("---")
-    nextBatch = current.next.next.next.next
-    swapped = sol.swapNext(nextBatch)
-    current.next.next.next.next = swapped
-    printNodes(current)
-
-    print("\n*****")
-    myList2 = sol.swapNext(myList2)
-    printNodes(myList2)
-    current = myList2
-    print("---")
+    
+    myList = sol.swapNext(myList)
+    current = myList
     while current.next is not None and current.next.next is not None:
-        nextBatch = current.next.next
-        current.next.next = sol.swapNext(nextBatch)
+        current.next.next = sol.swapNext(current.next.next)
         current = current.next.next
+    printNodes(myList)
+
+    print("\n---test----")
+    myList2 = sol.swapPairs(myList2)
     printNodes(myList2)
