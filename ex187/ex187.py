@@ -1,15 +1,27 @@
 class Solution:
-    _dict = {'A': 0, 'C': 1, 'G': 2, 'T': 3}
     def findRepeatedDnaSequences(self, s):
         """
         :type s: str
         :rtype: List[str]
         """
-        words = [s[i:i+10] for i in range(len(s)-10)]
-        print(words)
+        if len(s) == 10:
+            return [s]
+        else:
 
-        numbers = self.words2number(words)
-        print(numbers)
+            words = [s[i:i+10] for i in range(len(s)-9)]
+
+            count_dict = {}
+            for w in words:
+                if w in count_dict:
+                    count_dict[w] += 1
+                else:
+                    count_dict[w] = 1
+
+            result = []
+            for k, v in count_dict.items():
+                if v > 1:
+                    result.append(k)
+            return result
 
     def words2number(self, words):
         numbers = []
@@ -26,6 +38,8 @@ class Solution:
 if __name__ == '__main__':
     sol = Solution()
     
-    sol.findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT")
+    res = sol.findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT")
 
-    print(sol.words2number(['AAAG']))
+    print(res)
+
+    print(sol.findRepeatedDnaSequences("AAAAAAAAAA"))
