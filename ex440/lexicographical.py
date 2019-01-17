@@ -1,21 +1,21 @@
 def compare(a, b):
+    """
+    True if b>a
+    """
     a = str(a)
     b = str(b)
     i = 0
     while i < len(a) and i < len(b):
-        if int(a[i]) > int(b[i]):
-            print("T")
-            return True
-        elif int(a[i]) < int(b[i]):
-            print("F")
-            return False
-        else:
-            print(i)
+        if int(a[i]) == int(b[i]):
             i += 1
-    if i==len(a) and i==len(b):
-        return True
-    else:
-        if len(a) > i:
+        else:
+            if int(a[i]) < int(b[i]):
+                return True
+            else:
+                return False
+            
+    if i==len(a) or i==len(b):
+        if i==len(a) and i==len(b):
             return True
-        if len(b) > i:
-            return False    
+        else:
+            return len(b) > len(a)
