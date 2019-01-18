@@ -15,14 +15,15 @@ class Tree:
             self.right.printTree()
 
     def addNode(self, val):
-        #print("compare", self.val, val, 'R' if self.compare(self.val, val) else 'L')
         if self.compare(self.val, val):
             if self.right is None:
+#                print("# adding ", val)
                 self.right = Tree(val=val, compare=self.compare)
             else:
                 self.right.addNode(val)
         else:
             if self.left is None:
+#                print("# adding ", val)
                 self.left = Tree(val=val, compare=self.compare)
             else:
                 self.left.addNode(val=val)
@@ -35,17 +36,23 @@ class Tree:
             self.right.printTreeLevel(level+1)
 
     def del_max(self):
+        """
+        delete max in the tree
+        Returns:
+            current root
+            current max
+        """
         if self.right is None:
             # remove the head when there is no right child
-            return self.left
+            return self.left, self.left.find_max()
         elif self.right.right is None:
             # 
             self.right = self.right.left
-            return self
+            return self, self.find_max()
         else:
             # remove the max in the right child tree
-            self.right.del_max()
-            return self
+            _, tmax  = self.right.del_max()
+            return self, tmax
 
     def find_max(self):
         if self.right is None:

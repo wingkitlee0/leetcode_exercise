@@ -13,27 +13,34 @@ class Solution:
         if n>1 and k>1:
             t = Tree(1, compare=compare)
             count = 1
-            for l in range(2,n):
-                t.addNode(l)
-                count += 1
-                if count > k:
-                    t = t.del_max()
-                    count -= 1
+            tmax = 1
+            for l in range(2,n+1):
+                if count < k:
+                    t.addNode(l)
+                    tmax = t.find_max()
+                    count += 1
+                    print("# added %i and now max = %i" % (l, tmax))
+                else: # count > k
+                    if compare(l, tmax):
+                        t.addNode(l)
+                        t, tmax = t.del_max()
+                        print("# added %i and removed max" % l)
+                    else:
+                        continue
+            t.printTree()
             return t.find_max()
+        else:
+            if n==1:
+                return 1
+            if k==1:
+                return 1
 
+if __name__=='__main__':
+    N = 100
+    k = 10
 
+    sol = Solution()
 
-np.random.seed(1234)
-lst = [1,2,3,4,11,12,13,14,21,22,23,24]
-
-print(lst)
-
-t = Tree(lst[0], compare=compare)
-
-print("compare 2, 11 = ", t.compare(2,11) )
-
-
-t.printTree()
-
-print(t.find_max())
-
+    result = sol.findKthNumber(n=N, k=k)
+    print("N, k", N, k)
+    print(result)
