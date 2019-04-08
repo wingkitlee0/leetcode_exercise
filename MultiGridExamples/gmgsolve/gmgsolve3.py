@@ -82,32 +82,12 @@ def vcycle( A, f , N1=5, N2=5):
                 - np.dot(A[k,k+1:], v[k+1:]) ) / A[k,k]
     return v
 
-def vcycle_test(N):
+def vcycle_driver(N):
 
-#*****************************************************************************80
-#
-## VCYCLE_TEST tests VCYCLE.
-#
-#  Licensing:
-#
-#    This code is distributed under the GNU LGPL license. 
-#
-#  Modified:
-#
-#    02 October 2016
-#
-#  Author:
-#
-#    Mike Sussman
-#
-  import numpy as np
-  import platform
-  import scipy.linalg as la
+  
 
-  print ( '' )
   print ( 'VCYCLE_TEST:' )
-  print ( '  Python version: %s' % ( platform.python_version ( ) ) )
-  print ( '  VCYCLE applies one V-cycle to a matrix.' )
+  
 
   #x = np.linspace(0,1,N)
   x = np.linspace(0,1,N, endpoint=False) + 0.5/N
@@ -169,4 +149,4 @@ def vcycle_test(N):
 if ( __name__ == '__main__' ):
   import sys
   N = int(sys.argv[1])
-  vcycle_test(N)
+  vcycle_driver(N)
