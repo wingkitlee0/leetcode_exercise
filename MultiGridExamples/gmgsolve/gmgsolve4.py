@@ -165,7 +165,8 @@ def vcycle_driver(N,lbc=0, rbc=0):
     # right hand size
     f = np.sin(kx*x)
     # analytical solution
-    sol_f = lambda x: -np.sin(kx*x)/kx**2 + np.sin(kx)/kx**2 * x
+    #sol_f = lambda x: -np.sin(kx*x)/kx**2 + np.sin(kx)/kx**2 * x
+    sol_f = lambda x: -np.sin(kx*x)/kx**2 + np.cos(kx)/kx * x
 
     # UDIRECT is the exact solution, from Gauss elimination.
     udirect = la.solve ( A, f )
