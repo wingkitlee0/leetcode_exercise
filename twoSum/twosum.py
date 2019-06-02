@@ -62,15 +62,42 @@ class Solution:
 
         return [list(l) for l in result]
 
+    def twoSum_onepass(self, nums, target):
+        """
+        one pass implementation
 
+        return unique pairs only, e.g.,
+        [0,0] returns [0,0] once
+        """
+
+        ht = {}
+        result = set()
+        #result = []
+        for i, x in enumerate(nums):
+            y = target - x
+
+            if x not in ht:
+                ht[x] = [i]
+            else:
+                ht[x].append(i)
+
+            if y in ht:
+                # unique pairs only
+                result.add(tuple(sorted((x,y))))
+                #result.append(sorted([x,y])) 
+
+        return [list(l) for l in result]
 
 
 
 if __name__ == '__main__':
     nums = [-1, 0, 1, 0, 2, -2]
-    target = 1
+    target = 0
     
     sol = Solution()
     result = sol.twoSum(nums,target)
+    print(result)
+
+    result = sol.twoSum_onepass(nums,target)
     print(result)
 
