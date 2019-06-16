@@ -7,10 +7,13 @@ class Solution:
         """
         n1 = len(str1); n2 = len(str2)
 
+        if n1 == 0 or n2 == 0:
+            return ""
+
         # swap the strings if str1 is longer
         if n1 > n2:
-            str1, str2 = str2, str1
-            n1, n2 = n2, n1
+           str1, str2 = str2, str1
+           n1, n2 = n2, n1
 
         # construct a DP matrix
         DP = [ [''] * n2 for _ in range(n1)]
@@ -45,6 +48,7 @@ class Solution:
                         continue
     
                 else:
+                    # picking the longer subsequence out of DP[i][j+1] and DP[i+1][j]
                     if i < n1-1:
                         len1 = len(DP[i+1][j])
                     else:
@@ -72,3 +76,4 @@ if __name__ == '__main__':
     example_three("abab", "cab")
     example_three("aaa", "aaaaa")
     example_three("cabac", "abaccccc")
+    example_three("abcdefg", "adf")
