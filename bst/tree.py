@@ -31,3 +31,26 @@ class Tree:
             self.left.printTreeLevel(level+1)
         if self.right:
             self.right.printTreeLevel(level+1)
+
+    def printTreeByLevel(self, root):
+
+        if root is None:
+            print("Root is None. Nothing to print!")
+
+        frontier = [(0, root)]
+        result = []
+        
+        while frontier != []:
+            
+            node_lvl, node = frontier.pop(0)
+            result.append( (node_lvl, node.val) )
+
+            for child in [node.left, node.right]:
+                if child:
+                    frontier.append( (node_lvl+1, child))
+            
+
+        for x in result:
+            print("{} : {}".format(x[0], x[1]) )
+
+
