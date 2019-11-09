@@ -33,6 +33,9 @@ class Tree:
             self.right.printTreeLevel(level+1)
 
     def printTreeByLevel(self, root):
+        """
+        printing a tree level by level
+        """
 
         if root is None:
             print("Root is None. Nothing to print!")
@@ -42,7 +45,7 @@ class Tree:
         
         while frontier != []:
             
-            node_lvl, node = frontier.pop(0)
+            node_lvl, node = frontier.pop(0) # this is a queue
             result.append( (node_lvl, node.val) )
 
             for child in [node.left, node.right]:
