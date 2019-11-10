@@ -2,6 +2,13 @@ from typing import List
 
 class Solution:
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
+        """
+        4-sum
+
+        simple extension of two-sum: create a dictionary first and loop through the whole array.
+
+        this leads to complexity of O(n^3) ...
+        """
         n = len(nums)
 
         if nums == []:
