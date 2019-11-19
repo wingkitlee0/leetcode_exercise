@@ -4,41 +4,52 @@ class ListNode:
         self.val = x
         self.next = None
 
+    @staticmethod
+    def print_values(node):
+        if node is None:
+            print("None")
+        while node:
+            print(node.val, end=" ")
+            if node.next:
+                node = node.next
+            else:
+                break
+
+        print()
+
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
+        """
+        recursive version
+        """
+        ListNode.print_values(head)
 
         if head is None:
             return None
         if head.next is None:
-            return head
-        
-        def append(node, head):
-            if head is None:
-                node.next = None
-                return node
-            else:
-                print("calling append {}, {}".format(node.val, head.val))
-                if head.next is None:
-                    node.next = None
-                    head.next = node
-                    return head
-                else:
-                    tmp = head; tmp.next = None
-                    new_head = append(node, head.next)
-                    new_head.next = tmp
-                    return new_head
+            return ListNode(head.val)
 
-        return append(ListNode(head.val), head.next)
+        print("calling append {} to {}".format(head.val, head.next.val))
+        
+        tmp = self.reverseList(head.next)
+        head.next.next = ListNode(head.val)
+
+        ListNode.print_values(tmp)
+        return tmp
 
 if __name__ == '__main__':
 
-    head = ListNode(1)
-    head.next = ListNode(2)
-    head.next.next = ListNode(3)
-    head.next.next.next = ListNode(4)
+    inp = [1, 2, 3, 4]
+
+    head = ListNode(inp.pop(0))
+    node = head
+    while inp != []:
+        node.next = ListNode(inp.pop(0))
+        node = node.next
+        
+    ListNode.print_values(head)
 
     sol = Solution()
     result = sol.reverseList(head)
-    while result is not None:
-        print(result.val)
-        result = result.next
+    
+    ListNode.print_values(result)
