@@ -21,18 +21,13 @@ class Solution:
         if n == 1:
             return 1
 
-        dp = [None] * n
-        dp[0] = 1
+        # redefine a max function to handle the empty list
+        max_ = lambda x: 0 if x == [] else max(x)
 
+        dp = [1] * n
         for i in range(1, n):
-            dp_ = [(nums[j], dp[j]) for j in range(i) if nums[j] < nums[i]]
-            #print(dp_)
-            if dp_ == []:
-                dp[i] = 1
-            else:
-                dp[i] = 1 + max([k for _, k in dp_])
-
-            print("{}: {}".format(nums[i], dp))
+            dp[i] = 1 + max_([dp[j] for j in range(i) if nums[j] < nums[i]])
+            #print("{}: {}".format(nums[i], dp))
         return max(dp)
         
 
