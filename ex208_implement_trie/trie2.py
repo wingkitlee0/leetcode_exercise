@@ -1,3 +1,11 @@
+"""
+
+Trie implementation.
+
+Here I used dictionaries of dictionaries as my data structure.
+
+character-based.
+"""
 class Trie:
 
     def __init__(self):
@@ -15,12 +23,12 @@ class Trie:
         curr_node = self.root
 
         while i < len(word):
-            prefix = word[:i+1] # generate prefix
+            c = word[i] # generate prefix
 
-            if prefix not in curr_node:
-                curr_node[prefix] = {}
+            if c not in curr_node:
+                curr_node[c] = {}
 
-            curr_node = curr_node[prefix]
+            curr_node = curr_node[c]
 
             if i == len(word)-1:
                 curr_node['\n'] = None
@@ -37,12 +45,12 @@ class Trie:
         curr_node = self.root
 
         while i < len(word):
-            prefix = word[:i+1]
+            c = word[i]
             
-            if prefix not in curr_node:
+            if c not in curr_node:
                 break
             else:
-                curr_node = curr_node[prefix]
+                curr_node = curr_node[c]
                 i += 1
 
         return i == len(word) and '\n' in curr_node
@@ -58,12 +66,12 @@ class Trie:
         curr_node = self.root
 
         while i < len(prefix):
-            _prefix = prefix[:i+1]
+            c = prefix[i]
             
-            if _prefix not in curr_node:
+            if c not in curr_node:
                 break
             else:
-                curr_node = curr_node[_prefix]
+                curr_node = curr_node[c]
                 i += 1
 
         return i == len(prefix)        
