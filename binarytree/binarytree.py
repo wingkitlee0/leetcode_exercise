@@ -1,5 +1,6 @@
 from __future__ import annotations
 from typing import List
+from collections import deque
 
 class TreeMixin:
     def printTree(self):
@@ -16,6 +17,21 @@ class TreeMixin:
 
         while queue != []:
             level, curr = queue.pop(0)
+            if curr is not None:
+                print("{} : {}".format(level, curr.val))
+                for child in [curr.left, curr.right]:
+                    queue.append((level+1, child))
+            else:
+                print("{} : {}".format(level, None))
+
+    def printTree_bfs2(self):
+
+        level = 0
+        queue = deque()
+        queue.append((level, self))
+
+        while queue:
+            level, curr = queue.popleft()
             if curr is not None:
                 print("{} : {}".format(level, curr.val))
                 for child in [curr.left, curr.right]:
@@ -69,5 +85,5 @@ if __name__ == '__main__':
     for i, x in enumerate(input_list):
         tree = TreeNode.list2tree(x)
         print("=============={}==============".format(i))
-        tree.printTree_bfs()
+        tree.printTree_bfs2()
     
