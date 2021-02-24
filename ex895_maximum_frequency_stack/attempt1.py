@@ -17,6 +17,9 @@ class Node:
         self.prev_node: Node = None
         self.next_node: Node = None
 
+    def __eq__(self, other: Node) -> bool:
+        return (self.count == other.count) and (self.keys == other.keys)
+
     @classmethod
     def remove_key(cls, node: Node, key: int) -> bool:
         """
@@ -37,10 +40,21 @@ class Node:
                 next_node.prev_node = prev_node
             return True
         return False
-
-    def __eq__(self, other: Node) -> bool:
-        return (self.count == other.count) and (self.keys == other.keys)
-
+    
+    def insert_node(self, new_node: Node, left=False):
+        if new_node is None:
+            return 
+        
+        if left:
+            new_node.next_node = self
+            new_node.prev_node = self.prev_node
+            self.prev_node = new_node
+            return
+        else:
+            new_node.next_node = self.next_node
+            new_node.prev_node = self
+            self.next_node = new_node
+            return
 
 class FreqStack:
     def __init__(self):
@@ -76,9 +90,7 @@ class FreqStack:
                         return
                     else:
                         new_node = Node(count=node.count + 1, key=x)
-                        new_node.next_node = node.next_node
-                        new_node.prev_node = node
-                        node.next_node = new_node
+                        node.insert_node(new_node, left=False)
                         Node.remove_key(node=node, key=x)
                         self.d[x] = new_node
                         # update tail
@@ -92,9 +104,9 @@ class FreqStack:
                         print(f"{x} is the only key")
                         node.count += 1
                     else:
+                        # insert a new node
                         new_node = Node(count=node.count + 1, key=x)
-                        new_node.prev_node = node
-                        node.next_node = new_node
+                        node.insert_node(new_node, left=False)
                         Node.remove_key(node, key=x)
                         self.d[x] = new_node
                         self.tail = new_node
@@ -117,11 +129,12 @@ class FreqStack:
             return
 
     def pop(self) -> int:
-        x = next(iter(self.tail.keys))  # first element of the (ordered) dictionary
+        # x = next(iter(self.tail.keys))  # first element of the (ordered) dictionary
+        x, _ = self.tail.keys.popitem()
         print(f"pop() -> {x}")
-        # x = self.tail.keys.popitem()
 
         tail_node = self.d[x]  # tail node (max frequency)
+        # assert tail_node.next_node is None
 
         # check if node is the head as well
         if tail_node.count > self.head.count:
@@ -133,22 +146,21 @@ class FreqStack:
                 prev_node = tail_node.prev_node
                 prev_node.keys[x] = None
 
-                if len(tail_node.keys) == 1:
+                if len(tail_node.keys) == 0:
                     prev_node.next_node = None
                     self.tail = prev_node
-                else:
-                    del tail_node.keys[x]
+                # else:
+                #     del tail_node.keys[x]
 
                 # update self.d[x]
                 self.d[x] = prev_node
             else:
                 # insert a node with node.count - 1
                 new_node = Node(count=tail_node.count - 1, key=x)
-                new_node.next_node = tail_node
-                new_node.prev_node = tail_node.prev_node
-                tail_node.prev_node = new_node
+                tail_node.insert_node(new_node, left=True)
                 tail_node.next_node = None
-                Node.remove_key(tail_node, key=x)
+                # remove x from tail
+                # Node.remove_key(tail_node, key=x)
                 # update self.d[x]
                 self.d[x] = new_node
         else:
@@ -160,10 +172,7 @@ class FreqStack:
             else:
                 # insert a node with node.count - 1
                 new_node = Node(count=tail_node.count - 1, key=x)
-                new_node.next_node = tail_node
-                new_node.prev_node = tail_node.prev_node
-                tail_node.prev_node = new_node
-                tail_node.next_node = None
+                tail_node.insert_node(new_node, left=True)
                 self.head = new_node
                 # update self.d[x]
                 self.d[x] = new_node
