@@ -1,5 +1,7 @@
-from binarytree import Node
 from collections import deque
+
+from binarytree import Node
+
 
 class BinaryTree:
     @staticmethod
@@ -41,8 +43,7 @@ class BinaryTree:
         """
         implementation using recursion
         """
-        if len(queue) == 0 and \
-            not (node.left is None and node.right is None):
+        if len(queue) == 0 and not (node.left is None and node.right is None):
             # not last child
             print(node)
         if node.left is not None:
@@ -55,7 +56,6 @@ class BinaryTree:
             print(curr)
             BinaryTree.print_bfs_recursive(queue, curr)
 
-    
 
 def main():
     """
@@ -79,14 +79,12 @@ def main():
         n = queue.popleft()
         print(n)
 
-    print('---------------')
+    print("---------------")
     BinaryTree.print_bfs_recursive(queue, root)
 
-    print('---------------')
+    print("---------------")
     BinaryTree.print_bfs(root)
-    
 
 
-    
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
