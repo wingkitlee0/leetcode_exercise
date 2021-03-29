@@ -1,10 +1,14 @@
 """
 An implementation of BFS presented in Erik Deremaine's MIT class
 """
+from typing import Dict, Optional, List, Tuple
 
-def BFS(Adj, s='s'):
-    level = {s : 0}
-    parent = {s : None}
+
+def BFS(
+    Adj: Dict[str, List[str]], s: str = "s"
+) -> Tuple[Dict[str, int], Dict[str, Optional[str]]]:
+    level = {s: 0}
+    parent = {s: None}
     i = 1
 
     frontier = [s]
@@ -18,22 +22,23 @@ def BFS(Adj, s='s'):
                     next.append(v)
         frontier = next
         i += 1
-    
+
     return level, parent
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     Adj = {
-        's' : ['a', 'x'],
-        'a' : ['z'],
-        'x' : ['s', 'd', 'c'],
-        'd' : ['x', 'c', 'f'],
-        'c' : ['x', 'd', 'f', 'v'],
-        'f' : ['d', 'c', 'v'],
-        'v' : ['c', 'f'],
-        'z' : ['a']
+        "s": ["a", "x"],
+        "a": ["z"],
+        "x": ["s", "d", "c"],
+        "d": ["x", "c", "f"],
+        "c": ["x", "d", "f", "v"],
+        "f": ["d", "c", "v"],
+        "v": ["c", "f"],
+        "z": ["a"],
     }
 
-    level, parent = BFS(Adj, 's')
+    level, parent = BFS(Adj, "s")
 
     level_r = dict()
     for k, v in level.items():
@@ -45,8 +50,6 @@ if __name__ == '__main__':
     for k, v in level_r.items():
         print(k, v)
 
-
     print(level)
 
     print(parent)
-
