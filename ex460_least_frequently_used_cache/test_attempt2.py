@@ -100,10 +100,20 @@ def test_attempt1_full_0001():
     assert set(lfu.counter.keys()) == {3, 4}
 
 
-def test_attempt1_full_0001():
+def test_attempt1_full_0002():
     lfu = LFUCache(1)
     lfu.put(1, 1)
     lfu.put(1, 1)
     lfu.put(2, 2)
 
     assert lfu.get(1) == -1
+
+
+def test_min_count_0001():
+    lfu = LFUCache(2)
+    lfu.put(1, 1)
+    lfu.put(1, 2)
+
+    assert lfu.min_count == 2
+    lfu.put(2, 2)
+    assert lfu.min_count == 1

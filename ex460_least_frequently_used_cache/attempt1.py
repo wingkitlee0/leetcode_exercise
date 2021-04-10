@@ -46,7 +46,9 @@ class LFUCache:
             count = self.counter[key]  # current count
             self.counter[key] += 1
 
-            _ = self.pop_data(count, key)  # pop the old value from the data dict
+            _ = self.pop_data(
+                count, key
+            )  # pop the old value from the data dict
             self.add_data(count + 1, key, value)  # put the new value
 
         else:

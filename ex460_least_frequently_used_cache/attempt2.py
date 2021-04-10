@@ -6,8 +6,11 @@ from dataclasses import dataclass, field
 @dataclass
 class LFUCache:
     capacity: int
-    counter: DefaultDict[int, int] = field(init=False, default_factory=defaultdict)
+    counter: DefaultDict[int, int] = field(
+        init=False, default_factory=defaultdict
+    )
     data: Dict[int, Dict[int, Any]] = field(init=False, default_factory=dict)
+    _min_count: int = 0
 
     def pop_data(self, count: int, key=None) -> Any:
         """
@@ -54,22 +57,33 @@ class LFUCache:
             count = self.counter[key]  # current count
             self.counter[key] += 1
 
-            _ = self.pop_data(count, key)  # pop the old value from the data dict
+            _ = self.pop_data(
+                count, key
+            )  # pop the old value from the data dict
             self._add_data(count + 1, key, value)  # put the new value
+
+            # update min_count
+            if count not in self.data:
+                self._min_count = count + 1
 
         else:
             if len(self.counter) == self.capacity:
                 # counter reaches capacity, needs to delete something
-                min_count = min(self.data.keys())
-                print(f"min_count: {min_count}")
-
                 # pop the least frequent and least recent key-value pair
-                min_key, _ = self.popleft_data(min_count)
+                min_key, _ = self.popleft_data(self._min_count)
                 del self.counter[min_key]
+                # no need to update _min_count because we set it below
 
             # add new data
             self.counter[key] = 1
             self._add_data(1, key, value)
+            self._min_count = 1
+
+        # assert self._min_count == min(self.data.keys())
+
+    @property
+    def min_count(self):
+        return self._min_count
 
 
 # Your LFUCache object will be instantiated and called as such:
