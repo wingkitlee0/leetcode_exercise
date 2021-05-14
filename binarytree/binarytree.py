@@ -53,30 +53,35 @@ class TreeNode(TreeMixin):
         return (self.val == o.val) & (self.left == o.left) & (self.right == o.right)
 
     @staticmethod
-    def from_list(lst: List[Any]) -> TreeNode:
+    def from_list(lst: List[Any]) -> Optional[TreeNode]:
         """Convert a list into a binary tree"""
 
         if len(lst) == 0:
             return None
         if len(lst) == 1:
             return TreeNode(lst[0])
+        if lst[0] is None:
+            return None
 
-        inp = deque(lst)  # with copy
+        input = deque(lst)  # with copy
 
-        x = inp.popleft()
+        x = input.popleft()
         root = TreeNode(x)
 
         queue = deque([root])
-        while len(queue) > 0 and len(inp) > 0:
-            # curr = queue.pop(0)
+
+        # Construct the tree in a BFS way
+        # consume the input queue one by one
+        while len(queue) > 0 and len(input) > 0:
             curr = queue.popleft()
-            # x = inp.pop(0)
-            x = inp.popleft()
+            x = input.popleft()
+
+            # do nothing if None, as the left child is already None
             if x is not None:
                 curr.left = TreeNode(x)
                 queue.append(curr.left)
-            # x = inp.pop(0)
-            x = inp.popleft()
+
+            x = input.popleft()
             if x is not None:
                 curr.right = TreeNode(x)
                 queue.append(curr.right)
@@ -95,4 +100,7 @@ if __name__ == "__main__":
         tree = TreeNode.from_list(lst)
 
         print(f"=============={i}==============")
-        tree.printTree_bfs2()
+        if tree is not None:
+            tree.printTree_bfs2()
+        else:
+            print("Tree is None!")
