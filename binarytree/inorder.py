@@ -1,5 +1,6 @@
 from binarytree import TreeNode
 
+
 def get_inorder_iterative(tree):
 
     if tree is None:
@@ -24,8 +25,10 @@ def get_inorder_iterative(tree):
         if curr in visited:
             result.append(curr.val)
             continue
-        
-        if curr.left is None and curr.right is None: # append to the list if that's a leave
+
+        if (
+            curr.left is None and curr.right is None
+        ):  # append to the list if that's a leave
             result.append(curr.val)
             continue
 
@@ -37,7 +40,6 @@ def get_inorder_iterative(tree):
 
         visited.add(curr)
 
-        
     return result
 
 
