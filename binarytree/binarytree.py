@@ -58,10 +58,10 @@ class TreeNode(TreeMixin):
 
         if len(lst) == 0:
             return None
-        if len(lst) == 1:
-            return TreeNode(lst[0])
         if lst[0] is None:
             return None
+        if len(lst) == 1:
+            return TreeNode(lst[0])
 
         input = deque(lst)  # with copy
 
