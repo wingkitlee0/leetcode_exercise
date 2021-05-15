@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections import deque
-from typing import TYPE_CHECKING, Deque, Tuple
+from typing import TYPE_CHECKING, Any, Deque, List, Protocol, Tuple
 
 from binarytree.base_node import BaseNode
 
@@ -7,6 +9,20 @@ if TYPE_CHECKING:
     _Base = BaseNode
 else:
     _Base = object
+
+
+class HasTwoChildren(Protocol):
+    @property
+    def left(self) -> HasTwoChildren:
+        ...
+
+    @property
+    def right(self) -> HasTwoChildren:
+        ...
+
+    @property
+    def val(self) -> Any:
+        ...
 
 
 class BaseMixin(_Base):
@@ -55,3 +71,18 @@ class BaseMixin(_Base):
             for child in [curr.left, curr.right]:
                 if child is not None:
                     queue.append((level + 1, child))
+
+    def bfs(self: HasTwoChildren) -> List[Tuple[int, HasTwoChildren]]:
+        """Traversal of the tree by BFS"""
+        frontier = deque([(0, self)])
+        result = []
+
+        while frontier:
+            node_lvl, node = frontier.popleft()  # this is a queue
+            result.append((node_lvl, node.val))
+
+            for child in [node.left, node.right]:
+                if child:
+                    frontier.append((node_lvl + 1, child))
+
+        return result

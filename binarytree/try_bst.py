@@ -11,7 +11,7 @@ def setup_logging(level: str = "DEBUG"):
     root_logger.setLevel(level=level)
 
     stream_handler = logging.StreamHandler()
-    stream_handler.setLevel(logging.DEBUG)
+    stream_handler.setLevel(getattr(logging, level.upper()))
 
     root_logger.addHandler(stream_handler)
 

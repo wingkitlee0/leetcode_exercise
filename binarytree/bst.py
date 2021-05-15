@@ -3,7 +3,7 @@ from collections import deque
 from dataclasses import dataclass
 from typing import Any
 
-from binarytree import BaseMixin, BaseNode
+from .base_mixin import BaseMixin, BaseNode
 
 logger = logging.getLogger(__name__)
 
@@ -36,17 +36,7 @@ class BSTNode(BaseMixin, BaseNode):
     def print_tree_by_level(self):
         """Printing a tree level by level"""
 
-        frontier = deque([(0, self)])
-        result = []
-
-        while frontier:
-
-            node_lvl, node = frontier.popleft()  # this is a queue
-            result.append((node_lvl, node.val))
-
-            for child in [node.left, node.right]:
-                if child:
-                    frontier.append((node_lvl + 1, child))
+        result = self.bfs()
 
         for x in result:
-            print("{} : {}".format(x[0], x[1]))
+            print(f"{x[0]} : {x[1]}")
