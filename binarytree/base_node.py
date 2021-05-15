@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from abc import ABC
 from collections import deque
 from dataclasses import dataclass
 from typing import Any, Generic, List, Optional, Type, TypeVar
@@ -13,8 +12,8 @@ class BaseNode(Generic[T]):
     """ABC for a node"""
 
     val: Any
-    left: Optional["T"] = None
-    right: Optional["T"] = None
+    left: Optional[T] = None
+    right: Optional[T] = None
 
     def __eq__(self, o) -> bool:
         return (self.val == o.val) & (self.left == o.left) & (self.right == o.right)

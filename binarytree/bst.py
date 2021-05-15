@@ -1,13 +1,22 @@
+import logging
+from collections import deque
 from dataclasses import dataclass
 from typing import Any
-from binarytree import BaseNode, BaseMixin
+
+from binarytree import BaseMixin, BaseNode
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
 class BSTNode(BaseMixin, BaseNode):
+    def __post_init__(self):
+        logger.debug("Created a node with val=%s", self.val)
+
     def addNode(self, val: Any) -> None:
         if val >= self.val:
             if self.right is None:
+                logger.debug("  Adding node %s with parent %s", val, self.val)
                 self.right = self.__class__(val=val)
             else:
                 self.right.addNode(val)
@@ -24,20 +33,15 @@ class BSTNode(BaseMixin, BaseNode):
         if self.right:
             self.right.printTreeLevel(level + 1)
 
-    def printTreeByLevel(self, root):
-        """
-        printing a tree level by level
-        """
+    def print_tree_by_level(self):
+        """Printing a tree level by level"""
 
-        if root is None:
-            print("Root is None. Nothing to print!")
-
-        frontier = [(0, root)]
+        frontier = deque([(0, self)])
         result = []
 
-        while frontier != []:
+        while frontier:
 
-            node_lvl, node = frontier.pop(0)  # this is a queue
+            node_lvl, node = frontier.popleft()  # this is a queue
             result.append((node_lvl, node.val))
 
             for child in [node.left, node.right]:
@@ -46,10 +50,3 @@ class BSTNode(BaseMixin, BaseNode):
 
         for x in result:
             print("{} : {}".format(x[0], x[1]))
-
-
-if __name__ == "__main__":
-    root = BSTNode(val=0)
-
-    root.addNode(1)
-    root.print()

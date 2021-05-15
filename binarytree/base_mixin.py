@@ -1,5 +1,6 @@
 from collections import deque
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Deque, Tuple
+
 from binarytree.base_node import BaseNode
 
 if TYPE_CHECKING:
@@ -44,16 +45,13 @@ class BaseMixin(_Base):
                 print("{} : {}".format(level, None))
 
     def printTree_bfs2(self):
+        """Print the tree (BFS way)"""
 
-        level = 0
-        queue = deque()
-        queue.append((level, self))
-
+        queue: Deque[Tuple[int, _Base]] = deque([(0, self)])
         while queue:
             level, curr = queue.popleft()
-            if curr is not None:
-                print("{} : {}".format(level, curr.val))
-                for child in [curr.left, curr.right]:
+
+            print("{} : {}".format(level, curr.val))
+            for child in [curr.left, curr.right]:
+                if child is not None:
                     queue.append((level + 1, child))
-            else:
-                print("{} : {}".format(level, None))

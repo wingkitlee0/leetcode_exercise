@@ -1,6 +1,7 @@
 # treenode
 from dataclasses import dataclass
-from binarytree import BaseNode, BaseMixin
+
+from binarytree import BaseMixin, BaseNode
 
 
 @dataclass(unsafe_hash=True)
