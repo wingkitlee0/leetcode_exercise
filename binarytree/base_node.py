@@ -3,23 +3,25 @@ from __future__ import annotations
 from abc import ABC
 from collections import deque
 from dataclasses import dataclass
-from typing import Any, List, Optional, Type, TypeVar
+from typing import Any, Generic, List, Optional, Type, TypeVar
 
 T = TypeVar("T", bound="BaseNode")
 
-@dataclass(unsafe_hash=True)
-class BaseNode(ABC):
+
+@dataclass
+class BaseNode(Generic[T]):
     """ABC for a node"""
+
     val: Any
-    left: Optional[T] = None
-    right: Optional[T] = None
+    left: Optional["T"] = None
+    right: Optional["T"] = None
 
     def __eq__(self, o) -> bool:
         return (self.val == o.val) & (self.left == o.left) & (self.right == o.right)
 
     def __str__(self) -> str:
-        left = self.left.val if self.left is not None else None
-        right = self.right.val if self.right is not None else None
+        left = self.left.val if self.left else None
+        right = self.right.val if self.right else None
 
         return f"{type(self).__name__}(V={self.val}, L={left}, R={right})"
 
@@ -37,7 +39,7 @@ class BaseNode(ABC):
 
         root = cls(lst[0])
 
-        i = 1 #: index of the input list
+        i = 1  #: index of the input list
         queue = deque([root])
 
         # Construct the tree in a BFS way
@@ -52,7 +54,8 @@ class BaseNode(ABC):
                 queue.append(curr.left)
 
             i += 1
-            if i >= len(lst): break
+            if i >= len(lst):
+                break
             x = lst[i]
             if x is not None:
                 curr.right = cls(x)

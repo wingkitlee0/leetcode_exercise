@@ -2,6 +2,7 @@
 from dataclasses import dataclass
 from binarytree import BaseNode, BaseMixin
 
+
 @dataclass(unsafe_hash=True)
 class TreeNode(BaseMixin, BaseNode):
     pass

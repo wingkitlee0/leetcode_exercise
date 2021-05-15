@@ -2,9 +2,9 @@ from dataclasses import dataclass
 from typing import Any
 from binarytree import BaseNode, BaseMixin
 
+
 @dataclass
 class BSTNode(BaseMixin, BaseNode):
-
     def addNode(self, val: Any) -> None:
         if val >= self.val:
             if self.right is None:
@@ -20,9 +20,9 @@ class BSTNode(BaseMixin, BaseNode):
     def printTreeLevel(self, level):
         print(level, " : ", self)
         if self.left:
-            self.left.printTreeLevel(level+1)
+            self.left.printTreeLevel(level + 1)
         if self.right:
-            self.right.printTreeLevel(level+1)
+            self.right.printTreeLevel(level + 1)
 
     def printTreeByLevel(self, root):
         """
@@ -37,16 +37,15 @@ class BSTNode(BaseMixin, BaseNode):
 
         while frontier != []:
 
-            node_lvl, node = frontier.pop(0) # this is a queue
-            result.append( (node_lvl, node.val) )
+            node_lvl, node = frontier.pop(0)  # this is a queue
+            result.append((node_lvl, node.val))
 
             for child in [node.left, node.right]:
                 if child:
-                    frontier.append( (node_lvl+1, child))
-
+                    frontier.append((node_lvl + 1, child))
 
         for x in result:
-            print("{} : {}".format(x[0], x[1]) )
+            print("{} : {}".format(x[0], x[1]))
 
 
 if __name__ == "__main__":

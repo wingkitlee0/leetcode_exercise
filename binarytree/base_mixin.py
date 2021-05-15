@@ -7,6 +7,7 @@ if TYPE_CHECKING:
 else:
     _Base = object
 
+
 class BaseMixin(_Base):
     def print(self):
         """Print each node using __str__()"""
