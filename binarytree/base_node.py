@@ -2,30 +2,29 @@ from __future__ import annotations
 
 from abc import ABC
 from collections import deque
-from dataclasses import dataclass, field
-from typing import Any, List, Optional
+from dataclasses import dataclass
+from typing import Any, List, Optional, Type, TypeVar
 
-from binarytree.base_mixin import BaseMixin
-
+T = TypeVar("T", bound="BaseNode")
 
 @dataclass(unsafe_hash=True)
 class BaseNode(ABC):
     """ABC for a node"""
     val: Any
-    left: Optional[BaseNode] = None
-    right: Optional[BaseNode] = None
+    left: Optional[T] = None
+    right: Optional[T] = None
 
     def __eq__(self, o) -> bool:
         return (self.val == o.val) & (self.left == o.left) & (self.right == o.right)
 
     def __str__(self) -> str:
-        left = self.left.val if self.left else None
-        right = self.right.val if self.right else None
+        left = self.left.val if self.left is not None else None
+        right = self.right.val if self.right is not None else None
 
         return f"{type(self).__name__}(V={self.val}, L={left}, R={right})"
 
     @classmethod
-    def from_list(cls, lst: List[Any]) -> Optional[BaseNode]:
+    def from_list(cls: Type[T], lst: List[Any]) -> Optional[T]:
         """Convert a list into a binary tree"""
         print(f"Converting a list to a {cls.__name__}")
 
@@ -53,6 +52,7 @@ class BaseNode(ABC):
                 queue.append(curr.left)
 
             i += 1
+            if i >= len(lst): break
             x = lst[i]
             if x is not None:
                 curr.right = cls(x)
@@ -60,25 +60,3 @@ class BaseNode(ABC):
 
             i += 1
         return root
-
-
-@dataclass(unsafe_hash=True)
-class TreeNode(BaseNode, BaseMixin):
-    pass
-
-
-if __name__ == "__main__":
-
-    input_list = [
-        [0, None, 3],
-        [1, None, 0, 0, 1],
-    ]
-
-    for i, lst in enumerate(input_list):
-        tree = TreeNode.from_list(lst)
-
-        print(f"=============={i}==============")
-        if tree is not None:
-            tree.printTree_bfs2()
-        else:
-            print("Tree is None!")

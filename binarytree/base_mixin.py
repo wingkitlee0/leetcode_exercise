@@ -1,6 +1,13 @@
 from collections import deque
+from typing import TYPE_CHECKING
+from binarytree.base_node import BaseNode
 
-class BaseMixin:
+if TYPE_CHECKING:
+    _Base = BaseNode
+else:
+    _Base = object
+
+class BaseMixin(_Base):
     def print(self):
         """Print each node using __str__()"""
         if self.left:
