@@ -79,10 +79,29 @@ class BaseMixin(_Base):
 
         while frontier:
             node_lvl, node = frontier.popleft()  # this is a queue
-            result.append((node_lvl, node.val))
+            result.append((node_lvl, node))
 
             for child in [node.left, node.right]:
                 if child:
                     frontier.append((node_lvl + 1, child))
+
+        return result
+
+    def dfs(self: HasTwoChildren) -> List[Tuple[int, HasTwoChildren]]:
+        """Traversal of the tree by DFS"""
+        stack = [(0, self)]
+        result = []
+
+        while stack:
+            level, node = stack.pop()
+            result.append((level, node))
+
+            stack.extend(
+                [
+                    (level + 1, child)
+                    for child in [node.right, node.left]
+                    if child is not None
+                ]
+            )
 
         return result

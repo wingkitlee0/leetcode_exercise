@@ -30,3 +30,6 @@ if __name__ == "__main__":
     root.print()
     root.print_tree_by_level()
     root.printTree_bfs2()
+
+    print("DFS:")
+    root.print_tree_by_dfs()

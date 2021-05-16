@@ -40,3 +40,9 @@ class BSTNode(BaseMixin, BaseNode):
 
         for x in result:
             print(f"{x[0]} : {x[1]}")
+
+    def print_tree_by_dfs(self):
+        result = self.dfs()
+
+        for x in result:
+            print(f"{x[0]} : {x[1]}")
