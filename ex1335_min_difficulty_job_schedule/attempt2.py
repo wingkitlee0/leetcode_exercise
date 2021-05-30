@@ -23,13 +23,13 @@ class Solution:
             for j in range(w):  # loop for joblist (columns)
 
                 last_row = []
-                max_job_diff = jobDifficulty[k+j]
-                min_value = float('inf')
-                for m in range(j+1):
-                    current = jobDifficulty[k+j-m]
+                max_job_diff = jobDifficulty[k + j]
+                min_value = float("inf")
+                for m in range(j + 1):
+                    current = jobDifficulty[k + j - m]
                     if current > max_job_diff:
                         max_job_diff = current
-                    value = DP[k-1][j-m] + max_job_diff
+                    value = DP[k - 1][j - m] + max_job_diff
 
                     if value < min_value:
                         min_value = value
