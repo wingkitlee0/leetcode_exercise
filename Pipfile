@@ -5,12 +5,16 @@ name = "pypi"
 
 [packages]
 pytest = "*"
+mypy = "*"
+coverage = "*"
+pytest-watch = "*"
 
 [dev-packages]
 isort = "*"
 black = "*"
 ipython = "*"
 flake8 = "*"
+prompt-toolkit = "*"
 
 [requires]
 python_version = "3.9"
