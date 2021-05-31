@@ -3,6 +3,7 @@ from typing import List
 
 MAX_LIMIT = 100
 
+
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -15,7 +16,7 @@ class ListNode:
         return f"({self.val})"
 
     @classmethod
-    def from_list(cls, vals:List[int]) -> ListNode:
+    def from_list(cls, vals: List[int]) -> ListNode:
 
         if len(vals) == 0:
             return None
@@ -41,10 +42,9 @@ class ListNode:
                 break
         return result
 
+
 if __name__ == "__main__":
     root = ListNode.from_list([1, 2, 3])
     print(root.val, root.next.val, root.next.next.val)
 
     print(root.to_list())
-
-
