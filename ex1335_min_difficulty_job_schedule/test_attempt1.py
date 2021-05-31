@@ -38,3 +38,36 @@ class TestAttempt1:
             d=6,
         )
         assert result == 843
+
+    def test_0006(self):
+        sol = Solution()
+        result = sol.minDifficulty(
+            jobDifficulty=[1, 11, 2, 22, 3, 33, 4, 44],
+            d=6,
+        )
+        assert result == 83
+
+    def test_0007(self):
+        sol = Solution()
+        result = sol.minDifficulty(
+            jobDifficulty=[
+                186,
+                398,
+                479,
+                206,
+                885,
+                423,
+                805,
+                112,
+                925,
+                656,
+                16,
+                932,
+                740,
+                292,
+                671,
+                360,
+            ],
+            d=4,
+        )
+        assert result == 1803
